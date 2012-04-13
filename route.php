@@ -7,11 +7,6 @@ error_reporting(E_ALL);
 	$to = 30002187;
         $plan='';
         $route=array();
-		function microtime_float()
-		{
-			list($usec, $sec) = explode(" ", microtime());
-			return ((float)$usec + (float)$sec);
-		}
 	
 		function graph_find_path( &$G, $A, $B, $M = 50000 )
 		{
@@ -71,7 +66,7 @@ error_reporting(E_ALL);
 		  return $P;
 		}
 
-		$time_start = microtime_float();
+		$time_start = microtime(true);
 
 		$jumpArray = array();
 
@@ -106,7 +101,7 @@ error_reporting(E_ALL);
 				$jumpNum++;
 			}
 		}
-		$time_end = microtime_float();
+		$time_end = microtime(true);
 		$time = round($time_end - $time_start,5);
 
 		echo ($jumpNum-1)."\n";
