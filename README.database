@@ -1,0 +1,14 @@
+This code depends on having the Static Data Extract from CCP loaded into a mysql database.
+
+Once it is, you need to create the map lists. As it's optimal route only, if you want to keep it in high-sec, you have to remove the low sec connections from the list. The SQL below will create the jump list table you'll need. If you are happy to include lowsec, then the SQL at the very bottom will do it.
+
+
+create table mapSolarSystemJumpLists (fromSolarSystemID int(10) primary key,toSolarSystemID text);
+insert into mapSolarSystemJumpLists (select fromSolarSystemID,group_concat(toSolarSystemID SEPARATOR ',') from mapSolarSystemJumps,mapSolarSystems where mapSolarSystems.solarsystemid=mapSolarSystemJumps.toSolarSystemID and security>=0.5 group by fromSolarSystemID);
+
+
+
+
+Low/null sec included:
+create table mapSolarSystemJumpLists (fromSolarSystemID int(10) primary key,toSolarSystemID text);
+insert into mapSolarSystemJumpLists (select fromSolarSystemID,group_concat(toSolarSystemID SEPARATOR ',') from mapSolarSystemJumps,mapSolarSystems where mapSolarSystems.solarsystemid=mapSolarSystemJumps.toSolarSystemID and security>=0.5 group by fromSolarSystemID);
